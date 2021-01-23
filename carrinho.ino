@@ -22,10 +22,7 @@ union inputFromPC {
    byte pcLine[nob];
 };
 inputFromPC inputData;
-
-byte pcData[nob];
-boolean newData = false;
-
+boolean armed = false;
 WiFiServer sv(1000);//Cria o objeto servidor com tal porta
 WiFiClient cl;//Cria o objeto cliente.
 
@@ -57,7 +54,6 @@ void loop() {
     {
         digitalWrite(led2, LOW);
         receiveData();
-        setall();
     }
     else//Se nao houver cliente conectado,
     {
