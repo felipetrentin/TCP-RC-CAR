@@ -13,8 +13,8 @@
 
 
 struct datastruct {
-    short int motorspeed;// 2
-    short int steering;// 2
+    float motorspeed;// 2
+    float steering;// 2
 };
 #define nob sizeof(datastruct) //num of bytes
 union inputFromPC {
@@ -43,24 +43,26 @@ void setup() {
   analogWriteFreq(250);//freq. pwm
   Serial.begin(115200);//Habilita a comm serial.
   WiFi.mode(WIFI_AP);//Define o WiFi como Acess_Point.
-  WiFi.softAP("Car", "");//Cria a rede de Acess_Point.
+  WiFi.softAP("Car", "ultrasecurepw");//Cria a rede de Acess_Point.
   sv.begin();//Inicia o servidor TCP na porta declarada no começo.
   Serial.println(WiFi.softAPIP());//mostar ip
   Serial.println("started");
 }
 
 void loop() {
+  digitalWrite(led2, !armed);
   if (cl.connected())//Detecta se há clientes conectados no servidor.
     {
-        digitalWrite(led2, LOW);
+        digitalWrite(led1, LOW);
         receiveData();
     }
     else//Se nao houver cliente conectado,
     {
-        digitalWrite(led2, HIGH);
+        digitalWrite(led1, HIGH);
         cl = sv.available();//Disponabiliza o servidor para o cliente se conectar.
-        drive(0);
+        armed = false;
         steer(0);
+        drive(0);
         delay(1);
     }
 }

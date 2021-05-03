@@ -36,8 +36,8 @@ void receiveData() {
       sendResponse(0);
       break;
     case 3:
+      getmoves();
       if(armed){
-        getmoves();
         sendResponse(0);
       }else{
         sendResponse(2);
@@ -61,8 +61,8 @@ void getmoves() {
   Serial.print("speed: ");
   Serial.print(inputData.moveData.motorspeed);
   Serial.println('>');
-  steer(inputData.moveData.steering);
-  drive(inputData.moveData.motorspeed);
+  steer(inputData.moveData.steering * 1023);
+  drive(inputData.moveData.motorspeed * 1023);
 }
 
 void sendResponse(byte response){
